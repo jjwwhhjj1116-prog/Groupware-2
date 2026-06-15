@@ -141,7 +141,7 @@ function renderDashboardMain() {
         <div style="display: flex; align-items: center; gap: 20px;">
           <div style="font-size: 36px;">🌅</div>
           <div>
-            <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 6px;">유재우 실장님, 좋은 아침입니다!</h3>
+            <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 6px;">유종욱 실장님, 좋은 아침입니다!</h3>
             <p style="font-size: 13.5px; color: var(--text-sub); line-height: 1.6;">
               오늘 등록된 전사 협업 일정은 **${window.worksData.calendars.length}건**이며, 진행중인 업무 태스크 카드가 **${window.worksData.todos.filter(t => t.status === 'progress').length}건** 대기하고 있습니다. 
               최근 Viet QS 법인의 BIM 협업 드라이브에 **${window.worksData.drives.length}개**의 신규 도면 파일이 업로드되었습니다.
@@ -503,7 +503,7 @@ window.sendMailSimulate = function() {
   const newMail = {
     id: Date.now(),
     email: to,
-    sender: "나 (유재우 실장)",
+    sender: "나 (유종욱 실장)",
     title: `[발송 완료] ${title}`,
     content: content,
     time: "방금 전",
@@ -969,7 +969,7 @@ window.saveBoardPost = function() {
     id: maxId + 1,
     title: title,
     content: content,
-    author: "유재우 실장",
+    author: "유종욱 실장",
     date: dateStr,
     views: 0,
     isImportant: isImportant
@@ -1205,7 +1205,7 @@ window.simulateFileUpload = function() {
     desc: desc,
     date: dateStr,
     size: size,
-    owner: "유재우 실장"
+    owner: "유종욱 실장"
   };
 
   window.worksData.drives.unshift(newFile);

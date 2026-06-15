@@ -12,7 +12,7 @@ function login(email, password) {
   if (email.trim().toLowerCase() === DEMO_EMAIL) {
     const user = {
       email: DEMO_EMAIL,
-      name: "유재우",
+      name: "유종욱",
       role: "실장",
       empNo: "CC-002",
       dept: "경영지원본부"
