@@ -275,66 +275,237 @@ function renderChatSubPanel() {
 }
 
 function renderChatMain() {
+  const currentOption = localStorage.getItem("chat_send_option") || "enter";
+
   return `
-    <div class="main-header">
-      <div class="main-header-left">
-        <h2 style="font-size: 16px; font-weight: 800;" id="chatRoomTitle">개발지원 TF 단체방</h2>
-        <span class="badge blue" id="chatRoomMemberCount">멤버 3</span>
+    <!-- 상단 채널 정보 및 핀 공지 -->
+    <div class="main-header" style="height:auto; display:flex; flex-direction:column; padding:0;">
+      <div style="display:flex; width:100%; height:54px; justify-content:space-between; align-items:center; padding:0 20px; border-bottom:1px solid var(--border);">
+        <div class="main-header-left">
+          <h2 style="font-size: 15.5px; font-weight: 800;" id="chatRoomTitle">💬 개발지원 TF 단체방</h2>
+          <span class="badge blue" id="chatRoomMemberCount">멤버 3</span>
+        </div>
+        <div class="main-header-right">
+          <button class="btn btn-line" style="padding: 5px 10px; font-size:12px;" onclick="showToast('채널 정보 조회')">ℹ️ 정보</button>
+          <button class="btn btn-line" style="padding: 5px 10px; font-size:12px;" onclick="showToast('화상회의 예약 개설')">📹 화상회의 연동</button>
+        </div>
       </div>
-      <div class="main-header-right">
-        <button class="btn btn-line" style="padding: 6px 12px;" onclick="showToast('화상회의 예약 개설')">📹 화상회의 연동</button>
+      
+      <!-- 네이버웍스형 상단 공지사항 바 -->
+      <div class="chat-pin-notice" id="chatPinNotice">
+        <div style="display:flex; align-items:center; gap:8px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:90%;">
+          <span class="chat-pin-icon">📌</span>
+          <span style="font-size:12px; color:var(--text); font-weight:700;">[공지] 이번 주 금요일까지 포항 AI Factory 2차 피드백 도면 QC 제출 완료 요망</span>
+        </div>
+        <button style="background:none; border:none; color:var(--text-sub); font-size:15px; cursor:pointer;" onclick="document.getElementById('chatPinNotice').style.display='none'">&times;</button>
       </div>
     </div>
     
     <div class="main-viewport" style="padding: 20px; display: flex; flex-direction: column; justify-content: space-between; background-color: var(--bg);">
-      <div style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding-right: 6px;" id="chatMessageArea">
-        <div class="chat-message-row">
-          <div class="chat-avatar-circle">이</div>
+      
+      <!-- 메시지 타임라인 영역 -->
+      <div style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; padding-right: 6px;" id="chatMessageArea">
+        
+        <!-- 날짜 구분선 -->
+        <div class="chat-date-divider">
+          <span class="chat-date-chip">2026년 6월 15일 (월요일)</span>
+        </div>
+
+        <!-- 메시지 행: 이성희 파트장 -->
+        <div class="chat-message-row" id="msg-row-1">
+          <!-- 마우스오버 미니 리액션 바 -->
+          <div class="chat-reaction-toolbar" onclick="event.stopPropagation()">
+            <button class="reaction-btn" onclick="window.toggleMessageReaction('msg-row-1', '👍')">👍</button>
+            <button class="reaction-btn" onclick="window.toggleMessageReaction('msg-row-1', '❤️')">❤️</button>
+            <button class="reaction-btn" onclick="window.toggleMessageReaction('msg-row-1', '🔥')">🔥</button>
+            <button class="reaction-btn" onclick="window.toggleMessageReaction('msg-row-1', '✅')">✅</button>
+          </div>
+
+          <div class="chat-avatar-circle" style="background-color: var(--accent-blue); color:white;">이</div>
           <div class="chat-message-content">
             <span class="chat-sender-name">이성희 파트장</span>
             <div class="chat-bubble-wrapper">
-              <div class="chat-bubble bot" style="background-color: var(--surface);">BIM 관련 파일 수주 자료실에 업로드했습니다.</div>
+              <div class="chat-bubble bot" style="background-color: var(--surface);">
+                BIM 관련 파일 수주 자료실에 업로드했습니다. 도면 검토 확인해 주세요.
+                <!-- 네이버웍스 스타일 첨부파일 카드 -->
+                <div class="chat-file-card" onclick="showToast('A-101_BIM_Structure.dwg 파일 다운로드를 시작합니다.')">
+                  <div class="file-card-icon">📐</div>
+                  <div class="file-card-info">
+                    <span class="file-card-name">A-101_BIM_Structure.dwg</span>
+                    <span class="file-card-size">골조 구조 도면 · 18.4 MB</span>
+                  </div>
+                  <button class="file-card-dl-btn" title="다운로드">&darr;</button>
+                </div>
+              </div>
               <span class="chat-message-time">오후 2:15</span>
+            </div>
+            
+            <!-- 리액션 뱃지 리스트 -->
+            <div class="reaction-badge-area" id="msg-row-1-reactions">
+              <div class="reaction-badge active" onclick="window.toggleMessageReaction('msg-row-1', '👍')">👍 <span class="reaction-count">2</span></div>
+              <div class="reaction-badge" onclick="window.toggleMessageReaction('msg-row-1', '🔥')">🔥 <span class="reaction-count">1</span></div>
             </div>
           </div>
         </div>
         
-        <div class="chat-message-row mine">
+        <!-- 메시지 행: 나 (유종욱 실장) -->
+        <div class="chat-message-row mine" id="msg-row-2">
+          <div class="chat-reaction-toolbar" onclick="event.stopPropagation()">
+            <button class="reaction-btn" onclick="window.toggleMessageReaction('msg-row-2', '👍')">👍</button>
+            <button class="reaction-btn" onclick="window.toggleMessageReaction('msg-row-2', '❤️')">❤️</button>
+            <button class="reaction-btn" onclick="window.toggleMessageReaction('msg-row-2', '🔥')">🔥</button>
+            <button class="reaction-btn" onclick="window.toggleMessageReaction('msg-row-2', '✅')">✅</button>
+          </div>
+
           <div class="chat-avatar-circle" style="background-color: var(--theme-color);">유</div>
           <div class="chat-message-content">
             <div class="chat-bubble-wrapper">
               <div class="chat-bubble mine">감사합니다. 다운받아서 검토해 보겠습니다.</div>
               <span class="chat-message-time">오후 2:18</span>
             </div>
+            <div class="reaction-badge-area" id="msg-row-2-reactions"></div>
           </div>
         </div>
         
-        <div class="chat-message-row">
-          <div class="chat-avatar-circle">박</div>
+        <!-- 메시지 행: 박용진 수석 -->
+        <div class="chat-message-row" id="msg-row-3">
+          <div class="chat-reaction-toolbar" onclick="event.stopPropagation()">
+            <button class="reaction-btn" onclick="window.toggleMessageReaction('msg-row-3', '👍')">👍</button>
+            <button class="reaction-btn" onclick="window.toggleMessageReaction('msg-row-3', '❤️')">❤️</button>
+            <button class="reaction-btn" onclick="window.toggleMessageReaction('msg-row-3', '🔥')">🔥</button>
+            <button class="reaction-btn" onclick="window.toggleMessageReaction('msg-row-3', '✅')">✅</button>
+          </div>
+
+          <div class="chat-avatar-circle" style="background-color: var(--brand-primary); color:white;">박</div>
           <div class="chat-message-content">
             <span class="chat-sender-name">박용진 수석</span>
             <div class="chat-bubble-wrapper">
               <div class="chat-bubble bot" style="background-color: var(--surface);">네, 저도 검증 체크리스트와 교차 확인 중입니다.</div>
               <span class="chat-message-time">오후 2:25</span>
             </div>
+            <div class="reaction-badge-area" id="msg-row-3-reactions">
+              <div class="reaction-badge" onclick="window.toggleMessageReaction('msg-row-3', '✅')">✅ <span class="reaction-count">1</span></div>
+            </div>
           </div>
         </div>
       </div>
       
-      <!-- 채팅 전송 영역 -->
-      <div style="background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px; margin-top: 12px; box-shadow: var(--shadow);">
-        <textarea id="chatInputArea" style="width: 100%; height: 50px; border: none; resize: none; outline: none; background: transparent; color: var(--text); font-size: 13px;" placeholder="메시지를 입력하세요..." onkeydown="if(event.key==='Enter' && !event.shiftKey){ event.preventDefault(); sendChatMessage(); }"></textarea>
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px;">
-          <div style="display: flex; gap: 8px; color: var(--text-sub); font-size: 15px;">
-            <button style="background:none; border:none; cursor:pointer; color:inherit;" onclick="showToast('파일 첨부')">📎</button>
-            <button style="background:none; border:none; cursor:pointer; color:inherit;" onclick="showToast('이모지')">😀</button>
+      <!-- 슬랙형 일체형 Rich Text 입력창 -->
+      <div class="chat-editor-container">
+        <!-- 1) 서식 툴바 -->
+        <div class="chat-editor-toolbar">
+          <button class="chat-editor-btn" title="굵게" onclick="window.insertFormatTag('**')">B</button>
+          <button class="chat-editor-btn" title="기울임" onclick="window.insertFormatTag('*')">I</button>
+          <button class="chat-editor-btn" title="취소선" onclick="window.insertFormatTag('~~')">S</button>
+          <button class="chat-editor-btn" title="코드 블록" onclick="window.insertFormatTag('\`')">&lt;/&gt;</button>
+        </div>
+        
+        <!-- 2) 텍스트 입력창 -->
+        <div class="chat-editor-body">
+          <textarea id="chatInputArea" style="width: 100%; height: 56px; border: none; resize: none; outline: none; background: transparent; color: var(--text); font-size: 13.5px; line-height: 1.5;" placeholder="메시지를 입력하세요..." onkeydown="window.handleChatKeyDown(event)"></textarea>
+        </div>
+        
+        <!-- 3) 푸터 영역 (첨부/옵션/전송) -->
+        <div class="chat-editor-footer">
+          <div style="display: flex; gap: 4px;">
+            <button class="chat-editor-btn" title="파일 첨부" onclick="showToast('컴퓨터에서 파일 업로드')">📎</button>
+            <button class="chat-editor-btn" title="이모지 추가" onclick="showToast('이모지 선택창 열기')">😀</button>
           </div>
-          <button class="btn btn-primary" style="padding: 6px 14px;" onclick="sendChatMessage()">전송</button>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <select id="chatSendOption" class="form-input" style="padding: 2px 6px; font-size: 11px; width: 120px; height: 26px; border-radius: 4px; border: 1px solid var(--border); background: var(--bg); cursor:pointer;" onchange="window.saveChatSendOption(this.value)">
+              <option value="enter" ${currentOption === 'enter' ? 'selected' : ''}>Enter로 전송</option>
+              <option value="ctrl" ${currentOption === 'ctrl' ? 'selected' : ''}>Ctrl+Enter로 전송</option>
+            </select>
+            <button class="btn btn-primary" style="padding: 5px 12px; font-size: 12px; border-radius: 4px;" onclick="window.sendChatMessage()">전송</button>
+          </div>
         </div>
       </div>
     </div>
   `;
 }
+
+// 전송 단축키 옵션 로컬 저장소 동화
+window.saveChatSendOption = function(val) {
+  localStorage.setItem("chat_send_option", val);
+  showToast(`전송 방식이 [${val === 'enter' ? 'Enter' : 'Ctrl + Enter'}]로 변경되었습니다.`);
+};
+
+// 입력창 포맷 마커 자동 삽입 헬퍼
+window.insertFormatTag = function(tag) {
+  const textarea = document.getElementById("chatInputArea");
+  if (!textarea) return;
+
+  const start = textarea.selectionStart;
+  const end = textarea.selectionEnd;
+  const text = textarea.value;
+
+  const selectedText = text.substring(start, end);
+  const replacement = tag + selectedText + tag;
+
+  textarea.value = text.substring(0, start) + replacement + text.substring(end);
+  textarea.focus();
+  textarea.selectionStart = start + tag.length;
+  textarea.selectionEnd = start + tag.length + selectedText.length;
+};
+
+// 단축키 제어 키보드 리스너
+window.handleChatKeyDown = function(event) {
+  const option = localStorage.getItem("chat_send_option") || "enter";
+
+  if (event.key === "Enter") {
+    if (option === "enter") {
+      if (!event.shiftKey) {
+        event.preventDefault();
+        window.sendChatMessage();
+      }
+    } else {
+      if (event.ctrlKey) {
+        event.preventDefault();
+        window.sendChatMessage();
+      }
+    }
+  }
+};
+
+// 메시지별 이모지 리액션 토글
+window.toggleMessageReaction = function(rowId, emoji) {
+  const area = document.getElementById(`${rowId}-reactions`);
+  if (!area) return;
+
+  // 기존 뱃지 중 매칭되는 이모지가 있는지 검색
+  let found = false;
+  const badges = area.querySelectorAll(".reaction-badge");
+  
+  badges.forEach(badge => {
+    if (badge.textContent.includes(emoji)) {
+      found = true;
+      const countEl = badge.querySelector(".reaction-count");
+      let count = parseInt(countEl.textContent);
+      
+      if (badge.classList.contains("active")) {
+        badge.classList.remove("active");
+        count--;
+      } else {
+        badge.classList.add("active");
+        count++;
+      }
+      
+      if (count <= 0) {
+        badge.remove();
+      } else {
+        countEl.textContent = count;
+      }
+    }
+  });
+
+  if (!found) {
+    const newBadge = document.createElement("div");
+    newBadge.className = "reaction-badge active";
+    newBadge.onclick = () => window.toggleMessageReaction(rowId, emoji);
+    newBadge.innerHTML = `${emoji} <span class="reaction-count">1</span>`;
+    area.appendChild(newBadge);
+  }
+};
 
 window.sendChatMessage = function() {
   const textarea = document.getElementById("chatInputArea");
@@ -344,15 +515,24 @@ window.sendChatMessage = function() {
 
   const area = document.getElementById("chatMessageArea");
   const date = new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
-  
+  const rowId = `msg-row-${Date.now()}`;
+
   const html = `
-    <div class="chat-message-row mine">
+    <div class="chat-message-row mine" id="${rowId}">
+      <div class="chat-reaction-toolbar" onclick="event.stopPropagation()">
+        <button class="reaction-btn" onclick="window.toggleMessageReaction('${rowId}', '👍')">👍</button>
+        <button class="reaction-btn" onclick="window.toggleMessageReaction('${rowId}', '❤️')">❤️</button>
+        <button class="reaction-btn" onclick="window.toggleMessageReaction('${rowId}', '🔥')">🔥</button>
+        <button class="reaction-btn" onclick="window.toggleMessageReaction('${rowId}', '✅')">✅</button>
+      </div>
+
       <div class="chat-avatar-circle" style="background-color: var(--theme-color);">유</div>
       <div class="chat-message-content">
         <div class="chat-bubble-wrapper">
           <div class="chat-bubble mine">${text}</div>
           <span class="chat-message-time">${date}</span>
         </div>
+        <div class="reaction-badge-area" id="${rowId}-reactions"></div>
       </div>
     </div>
   `;
