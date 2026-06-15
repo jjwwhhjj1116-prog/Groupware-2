@@ -1,6 +1,6 @@
-/* Groupware System v2 - 공통 컴포넌트 디자인 개정 */
+/* Groupware System v2 - 상세 컴포넌트 스타일 시트 (components.css) */
 
-/* 버튼 컴포넌트 */
+/* 버튼 및 뱃지 */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -9,7 +9,7 @@
   border: 1px solid var(--border);
   background-color: var(--surface);
   color: var(--text);
-  padding: 8px 16px;
+  padding: 8px 14px;
   font-size: 13px;
   font-weight: 600;
   border-radius: 6px;
@@ -52,7 +52,6 @@
   color: var(--text);
 }
 
-/* 뱃지 컴포넌트 */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -63,32 +62,12 @@
   line-height: 1;
 }
 
-.badge.blue {
-  background-color: var(--accent-blue-soft);
-  color: var(--accent-blue);
-}
+.badge.blue { background-color: var(--accent-blue-soft); color: var(--accent-blue); }
+.badge.gray { background-color: var(--border); color: var(--text-sub); }
+.badge.green { background-color: var(--accent-green-soft); color: var(--accent-green); }
+.badge.yellow { background-color: #FEF3C7; color: #D97706; }
+.badge.red { background-color: var(--danger-soft); color: var(--danger); }
 
-.badge.gray {
-  background-color: var(--border);
-  color: var(--text-sub);
-}
-
-.badge.green {
-  background-color: var(--accent-green-soft);
-  color: var(--accent-green);
-}
-
-.badge.yellow {
-  background-color: #FEF3C7;
-  color: #D97706;
-}
-
-.badge.red {
-  background-color: var(--danger-soft);
-  color: var(--danger);
-}
-
-/* 회사 칩 */
 .company-chip {
   display: inline-flex;
   align-items: center;
@@ -99,17 +78,8 @@
   text-transform: uppercase;
 }
 
-.company-chip.concost {
-  background-color: var(--brand-primary-soft);
-  color: var(--brand-primary);
-  border: 1px solid rgba(242, 106, 27, 0.2);
-}
-
-.company-chip.vietqs {
-  background-color: var(--accent-blue-soft);
-  color: var(--accent-blue);
-  border: 1px solid rgba(27, 77, 142, 0.2);
-}
+.company-chip.concost { background-color: var(--brand-primary-soft); color: var(--brand-primary); border: 1px solid rgba(242, 106, 27, 0.2); }
+.company-chip.vietqs { background-color: var(--accent-blue-soft); color: var(--accent-blue); border: 1px solid rgba(27, 77, 142, 0.2); }
 
 /* 카드 UI */
 .card {
@@ -121,7 +91,39 @@
   transition: background-color var(--transition-speed), border-color var(--transition-speed);
 }
 
-/* 모달 팝업 */
+/* 폼 컨트롤 */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.form-field label {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background-color: var(--bg);
+  color: var(--text);
+  font-size: 13.5px;
+  outline: none;
+  transition: all var(--transition-speed);
+}
+
+.form-input:focus {
+  border-color: var(--theme-color);
+  background-color: var(--surface);
+  box-shadow: 0 0 0 3px var(--theme-color-soft);
+}
+
+/* 모달 백드롭 */
 .modal-backdrop {
   position: fixed;
   top: 0;
@@ -135,19 +137,21 @@
   justify-content: center;
   z-index: 1000;
   opacity: 0;
+  pointer-events: none;
   transition: opacity 0.2s ease;
 }
 
 .modal-backdrop.active {
   opacity: 1;
+  pointer-events: auto;
 }
 
 .modal {
   background-color: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 16px;
+  border-radius: 12px;
   box-shadow: 0 24px 48px rgba(0, 0, 0, 0.15);
-  width: 440px;
+  width: 460px;
   max-width: 90%;
   transform: scale(0.95);
   transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -159,7 +163,7 @@
 }
 
 .modal-head {
-  padding: 18px 20px;
+  padding: 16px 20px;
   border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
@@ -167,14 +171,14 @@
 }
 
 .modal-head h2 {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 800;
 }
 
 .modal-head .close {
   background: none;
   border: none;
-  font-size: 24px;
+  font-size: 22px;
   color: var(--text-sub);
   cursor: pointer;
 }
@@ -183,33 +187,32 @@
   padding: 20px;
 }
 
-/* 인사카드 관련 */
+/* 인사카드 모달 팝업 */
 .mini-profile {
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .profile-photo {
-  width: 56px;
-  height: 56px;
-  border-radius: 14px;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
   background-color: var(--theme-color);
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 800;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  transition: background-color var(--transition-speed);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
 }
 
 .mini-profile h2 {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 800;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 
 .profile-tags {
@@ -221,28 +224,28 @@
 .mini-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 8px;
   margin-bottom: 16px;
 }
 
 .mini-box {
   background-color: var(--bg);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 10px 14px;
+  border-radius: 6px;
+  padding: 8px 12px;
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
 .mini-box span {
-  font-size: 10px;
+  font-size: 9.5px;
   color: var(--text-sub);
   font-weight: 700;
 }
 
 .mini-box strong {
-  font-size: 13px;
+  font-size: 12.5px;
   color: var(--text);
   font-weight: 800;
 }
@@ -252,176 +255,268 @@
   color: var(--text-sub);
   background-color: var(--bg);
   border: 1px dashed var(--border);
-  border-radius: var(--radius);
-  padding: 10px 14px;
+  border-radius: 6px;
+  padding: 10px 12px;
   line-height: 1.5;
 }
 
-/* 대화방 목록 / 주소록 등의 리스트 아이템 */
-.list-item {
-  padding: 12px 16px;
+/* ──────────────────────────────────────────────
+   네이버웍스 전용 개별 카테고리 뷰 스타일
+   ────────────────────────────────────────────── */
+
+/* 1. 홈 (대시보드 그리드) */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 20px;
+  padding: 24px;
+}
+
+.widget-wide { grid-column: span 12; }
+.widget-mid { grid-column: span 6; }
+.widget-small { grid-column: span 4; }
+
+@media (max-width: 1024px) {
+  .widget-mid, .widget-small { grid-column: span 12; }
+}
+
+.widget-card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease;
+}
+
+.widget-card:hover {
+  transform: translateY(-2px);
+}
+
+.widget-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 14px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+}
+
+/* 2. 캘린더 그리드 */
+.calendar-container {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.calendar-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background-color: var(--bg);
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+  font-weight: 800;
+  font-size: 13px;
+  padding: 10px 0;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+}
+
+.calendar-cell {
+  min-height: 96px;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.calendar-cell:nth-child(7n) { border-right: none; }
+.calendar-cell.other-month { opacity: 0.4; }
+
+.calendar-date-num {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.calendar-event {
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background-color: var(--theme-color-soft);
+  color: var(--theme-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+/* Sunday/Saturday colors */
+.calendar-header div:first-child, .calendar-grid .calendar-cell:nth-child(7n-6) .calendar-date-num { color: var(--danger); }
+.calendar-header div:last-child, .calendar-grid .calendar-cell:nth-child(7n) .calendar-date-num { color: var(--accent-blue); }
+
+/* 3. 할 일 (칸반 보드) */
+.kanban-board {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  overflow-x: auto;
+  height: calc(100vh - 120px);
+  align-items: flex-start;
+}
+
+.kanban-column {
+  width: 320px;
+  flex-shrink: 0;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+}
+
+.kanban-column-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.kanban-card-list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 150px;
+}
+
+.kanban-card {
+  background-color: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  cursor: grab;
+  transition: all 0.2s ease;
+}
+
+.kanban-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--theme-color);
+  box-shadow: var(--shadow);
+}
+
+.kanban-card-title {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.kanban-card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  color: var(--text-sub);
+}
+
+/* 4. 테이블 리스트 (메일, 게시판, 드라이브 등) */
+.table-container {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.works-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.works-table th {
+  background-color: var(--bg);
+  padding: 12px 16px;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--text-sub);
+  border-bottom: 1px solid var(--border);
+}
+
+.works-table td {
+  padding: 14px 16px;
+  font-size: 13px;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+}
+
+.works-table tbody tr {
   cursor: pointer;
   transition: background-color var(--transition-speed);
 }
 
-.list-item:hover {
+.works-table tbody tr:hover {
   background-color: var(--bg);
 }
 
-.list-item.active {
-  background-color: var(--theme-color-soft);
+/* 슬랙용 어두운 서브 아이템 리스트 */
+.subpanel-list {
+  list-style: none;
+  padding: 8px;
 }
 
-.list-item-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  background-color: var(--theme-color);
-  color: white;
+.subpanel-item {
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  font-size: 15px;
-}
-
-.list-item-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  min-width: 0;
-}
-
-.list-item-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.list-item-title {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--text);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.list-item-time {
-  font-size: 11px;
-  color: var(--text-sub);
-}
-
-.list-item-preview {
-  font-size: 12px;
-  color: var(--text-sub);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* 메신저 말풍선 (Chat Bubble) */
-.chat-message-row {
-  display: flex;
   gap: 10px;
-  margin-bottom: 16px;
-  align-items: flex-start;
-}
-
-.chat-message-row.mine {
-  flex-direction: row-reverse;
-}
-
-.chat-avatar-circle {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  background-color: var(--theme-color);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 8px 12px;
+  border-radius: 6px;
   font-size: 13px;
-  font-weight: 800;
+  font-weight: 700;
+  color: var(--sub-text);
+  cursor: pointer;
+  margin-bottom: 2px;
+  transition: all var(--transition-speed);
 }
 
-.chat-message-content {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  max-width: 70%;
+.subpanel-item:hover {
+  color: #FFFFFF;
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
-.chat-message-row.mine .chat-message-content {
-  align-items: flex-end;
+.subpanel-item.active {
+  background-color: var(--theme-color);
+  color: #FFFFFF;
 }
 
-.chat-sender-name {
+.subpanel-section-title {
   font-size: 11px;
-  font-weight: 700;
-  color: var(--text-sub);
-}
-
-.chat-bubble-wrapper {
-  display: flex;
-  align-items: flex-end;
-  gap: 6px;
-}
-
-.chat-message-row.mine .chat-bubble-wrapper {
-  flex-direction: row-reverse;
-}
-
-.chat-bubble {
-  padding: 10px 14px;
-  border-radius: 12px;
-  font-size: 13.5px;
-  line-height: 1.5;
-  word-break: break-all;
-}
-
-.chat-bubble.bot {
-  background-color: var(--bg);
-  color: var(--text);
-  border: 1px solid var(--border);
-}
-
-.chat-bubble.mine {
-  background-color: var(--theme-color);
-  color: #FFFFFF;
-}
-
-.chat-message-time {
-  font-size: 10px;
-  color: var(--text-sub);
-  white-space: nowrap;
-}
-
-/* 토스트 알림 */
-.toast {
-  position: fixed;
-  bottom: 80px;
-  left: 50%;
-  transform: translate(-50%, 100px);
-  background-color: #1F2329;
-  color: #FFFFFF;
-  padding: 10px 20px;
-  border-radius: 20px;
-  font-weight: 700;
-  font-size: 13px;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
-  z-index: 1000;
-  opacity: 0;
-  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.15), opacity 0.25s ease;
-  pointer-events: none;
-}
-
-.toast.active {
-  transform: translate(-50%, 0);
-  opacity: 1;
+  font-weight: 800;
+  color: rgba(255,255,255,0.4);
+  padding: 16px 12px 8px 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }

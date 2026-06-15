@@ -57,6 +57,16 @@ function setCurrentUser(user) {
   notify("userChange", user);
 }
 
+// Gemini API Key 관리
+function getGeminiApiKey() {
+  return localStorage.getItem("gemini_api_key") || "";
+}
+
+function setGeminiApiKey(key) {
+  localStorage.setItem("gemini_api_key", key);
+  notify("apiKeyChange", key);
+}
+
 // 상태 초기화 (다크모드 및 회사 테마 바인딩)
 function initStore() {
   document.body.classList.toggle("dark", state.darkMode);
@@ -78,5 +88,7 @@ window.appStore = {
   setCurrentCompany,
   setDarkMode,
   setCurrentUser,
+  getGeminiApiKey,
+  setGeminiApiKey,
   initStore
 };

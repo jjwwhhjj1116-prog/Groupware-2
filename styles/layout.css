@@ -1,4 +1,4 @@
-/* Groupware System v2 - 네이버웍스 스타일 3단 레이아웃 */
+/* Groupware System v2 - 슬랙 스타일 & 플로팅 챗봇 레이아웃 개편 */
 
 .app-container {
   display: flex;
@@ -8,15 +8,15 @@
   overflow: hidden;
 }
 
-/* 1단: 최좌측 아이콘 숏컷 바 (LNB / Dock) */
+/* 1단: 최좌측 워크스페이스 스위처 바 (Dock) */
 .app-dock {
-  width: 70px;
+  width: 68px;
   background-color: var(--dock-bg);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 0;
+  padding: 16px 0;
   z-index: 100;
   transition: background-color var(--transition-speed);
 }
@@ -25,32 +25,37 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 28px;
+  gap: 20px;
   width: 100%;
 }
 
-/* 회사 브랜드 심볼 구역 */
+/* 슬랙 스타일 워크스페이스 선택 단추 */
 .dock-logo-wrap {
   width: 44px;
   height: 44px;
-  border-radius: 12px;
-  background-color: var(--surface);
+  border-radius: 8px;
+  background-color: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   cursor: pointer;
   overflow: hidden;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 2px solid transparent;
 }
 
 .dock-logo-wrap:hover {
   transform: scale(1.05);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+}
+
+.dock-logo-wrap.active {
+  border-color: #FFFFFF;
 }
 
 .dock-logo-img {
-  width: 82%;
-  height: 82%;
+  width: 86%;
+  height: 86%;
   object-fit: contain;
 }
 
@@ -63,9 +68,9 @@
 }
 
 .dock-item {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -73,30 +78,39 @@
   text-decoration: none;
   position: relative;
   transition: all var(--transition-speed);
-  cursor: pointer;
 }
 
 .dock-item:hover {
   color: #FFFFFF;
-  background-color: rgba(255, 255, 255, 0.08);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .dock-item.active {
   color: #FFFFFF;
-  background-color: var(--theme-color);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background-color: rgba(255, 255, 255, 0.15);
 }
 
-/* 뱃지 카운터 */
+/* 독 아이템 왼쪽에 슬랙식 조그만 인디케이터 바 */
+.dock-item.active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10px;
+  bottom: 10px;
+  width: 3px;
+  background-color: var(--theme-color);
+  border-radius: 0 4px 4px 0;
+}
+
 .dock-badge {
   position: absolute;
-  top: 4px;
-  right: 4px;
+  top: 2px;
+  right: 2px;
   background-color: var(--danger);
   color: #FFFFFF;
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 800;
-  padding: 2px 6px;
+  padding: 1px 4px;
   border-radius: 999px;
   line-height: 1;
   border: 1.5px solid var(--dock-bg);
@@ -106,7 +120,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 16px;
   width: 100%;
 }
 
@@ -115,7 +129,7 @@
   height: 40px;
   border-radius: 50%;
   border: none;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.05);
   color: var(--dock-text);
   display: flex;
   align-items: center;
@@ -126,81 +140,59 @@
 
 .dock-action-btn:hover {
   color: #FFFFFF;
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(255, 255, 255, 0.12);
 }
 
-/* 법인 토글 스위치 */
-.dock-company-toggle {
-  width: 44px;
-  height: 24px;
-  border-radius: 999px;
-  background-color: rgba(255, 255, 255, 0.15);
-  position: relative;
-  cursor: pointer;
-  transition: background-color var(--transition-speed);
-}
-
-.dock-company-toggle-handle {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background-color: #FFFFFF;
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  transition: left 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-body.company-vietqs .dock-company-toggle {
-  background-color: var(--accent-blue);
-}
-
-body.company-vietqs .dock-company-toggle-handle {
-  left: 23px;
-}
-
-/* 2단: 서브 컨트롤 패널 (Sub-panel) */
+/* 2단: 슬랙 스타일 짙은 채널/서브 리스트 바 (Sub-panel) */
 .app-subpanel {
-  width: 260px;
-  background-color: var(--surface);
-  border-right: 1px solid var(--border);
+  width: 250px;
+  background-color: var(--sub-bg);
+  border-right: 1px solid var(--sub-border);
   display: flex;
   flex-direction: column;
   z-index: 99;
   transition: background-color var(--transition-speed), border-color var(--transition-speed);
+  color: var(--sub-text);
 }
 
 .subpanel-header {
-  height: 64px;
-  padding: 0 20px;
+  height: 60px;
+  padding: 0 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--sub-border);
 }
 
 .subpanel-title {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 800;
-  color: var(--text);
+  color: #FFFFFF;
 }
 
 .subpanel-search {
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--border);
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--sub-border);
 }
 
 .subpanel-search-box {
   width: 100%;
-  padding: 8px 12px 8px 32px;
+  padding: 6px 10px 6px 28px;
   border-radius: 6px;
-  border: 1px solid var(--border);
-  background-color: var(--bg);
-  color: var(--text);
-  font-size: 13px;
+  border: 1px solid var(--sub-border);
+  background-color: rgba(255, 255, 255, 0.06);
+  color: #FFFFFF;
+  font-size: 12.5px;
   outline: none;
-  position: relative;
+}
+
+.subpanel-search-box::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.subpanel-search-box:focus {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .subpanel-body {
@@ -208,7 +200,7 @@ body.company-vietqs .dock-company-toggle-handle {
   overflow-y: auto;
 }
 
-/* 3단: 메인 콘텐츠 영역 (Main) */
+/* 3단: 메인 및 뷰포트 (Main) */
 .app-main {
   flex: 1;
   display: flex;
@@ -218,9 +210,9 @@ body.company-vietqs .dock-company-toggle-handle {
   position: relative;
 }
 
-/* 데스크톱 상단 윈도우 타이틀바 흉내 */
+/* 상단 윈도우 타이틀바 */
 .app-titlebar {
-  height: 32px;
+  height: 28px;
   background-color: var(--surface);
   border-bottom: 1px solid var(--border);
   display: flex;
@@ -228,10 +220,11 @@ body.company-vietqs .dock-company-toggle-handle {
   justify-content: space-between;
   padding: 0 16px;
   user-select: none;
-  font-size: 11px;
+  font-size: 10.5px;
   color: var(--text-sub);
   font-weight: 700;
   z-index: 10;
+  transition: background-color var(--transition-speed), border-color var(--transition-speed);
 }
 
 .titlebar-drag-region {
@@ -239,7 +232,6 @@ body.company-vietqs .dock-company-toggle-handle {
   height: 100%;
   display: flex;
   align-items: center;
-  cursor: default;
 }
 
 .titlebar-controls {
@@ -248,71 +240,138 @@ body.company-vietqs .dock-company-toggle-handle {
 }
 
 .titlebar-btn {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   display: inline-block;
 }
 
-.titlebar-btn.close { background-color: #FF5F56; }
+.titlebar-btn.close { background-color: #FF5F56; cursor: pointer; }
 .titlebar-btn.minimize { background-color: #FFBD2E; }
 .titlebar-btn.maximize { background-color: #27C93F; }
 
-/* 메인 뷰포트 헤더 */
-.main-header {
-  height: 64px;
-  background-color: var(--surface);
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 24px;
-  z-index: 9;
-}
-
-.main-header-left {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.main-header-right {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
+/* 메인 콘텐츠 영역 */
 .main-viewport {
   flex: 1;
   overflow-y: auto;
   position: relative;
 }
 
-/* AI 챗봇 슬라이더 패널 */
-.ai-chatbot-panel {
-  position: absolute;
-  top: 0;
-  right: -380px;
-  width: 380px;
-  height: 100%;
+/* 메인 뷰포트 헤더 */
+.main-header {
+  height: 60px;
   background-color: var(--surface);
-  border-left: 1px solid var(--border);
-  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.08);
-  z-index: 110;
-  transition: right 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 9;
+  flex-shrink: 0;
+  transition: background-color var(--transition-speed), border-color var(--transition-speed);
+}
+
+.main-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.main-header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 4단: 우측 플로팅 로봇 AI 챗봇 버튼 & 위젯 (우측 중앙 배치형) */
+.ai-floating-trigger {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: var(--theme-color);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color var(--transition-speed);
+  z-index: 999;
+}
+
+.ai-floating-trigger:hover {
+  transform: translateY(-50%) scale(1.08) rotate(5deg);
+}
+
+.ai-floating-widget {
+  position: fixed;
+  right: 88px;
+  top: 50%;
+  width: 360px;
+  height: 520px;
+  border-radius: 16px;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
+  z-index: 998;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  transform: translateY(-50%) scale(0.9);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.ai-chatbot-panel.active {
-  right: 0;
+.ai-floating-widget.active {
+  transform: translateY(-50%) scale(1);
+  opacity: 1;
+  pointer-events: auto;
 }
 
-/* 툴팁 효과 */
+.ai-widget-header {
+  height: 52px;
+  background-color: var(--theme-color);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  flex-shrink: 0;
+  transition: background-color var(--transition-speed);
+}
+
+.ai-widget-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  background-color: var(--bg);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: background-color var(--transition-speed);
+}
+
+.ai-widget-footer {
+  padding: 12px;
+  background-color: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-shrink: 0;
+  transition: background-color var(--transition-speed), border-color var(--transition-speed);
+}
+
+/* LNB 독 툴팁 */
 .dock-item[data-tooltip]::after {
   content: attr(data-tooltip);
   position: absolute;
-  left: 80px;
+  left: 78px;
   top: 50%;
   transform: translateY(-50%);
   background-color: #1E2022;
@@ -325,7 +384,7 @@ body.company-vietqs .dock-company-toggle-handle {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.15s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   z-index: 200;
 }
 
@@ -333,7 +392,7 @@ body.company-vietqs .dock-company-toggle-handle {
   opacity: 1;
 }
 
-/* 모바일 반응형 분기 (@media 768px) */
+/* 모바일 768px 분기 대응 */
 @media (max-width: 768px) {
   .app-container {
     flex-direction: column-reverse;
@@ -341,10 +400,9 @@ body.company-vietqs .dock-company-toggle-handle {
   
   .app-dock {
     width: 100%;
-    height: 60px;
+    height: 56px;
     flex-direction: row;
     padding: 0 12px;
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
   }
   
   .dock-top {
@@ -354,19 +412,38 @@ body.company-vietqs .dock-company-toggle-handle {
   }
   
   .dock-logo-wrap, .dock-bottom, .dock-item[data-tooltip]::after {
-    display: none; /* 모바일 하단바에서는 로고 및 툴팁 비노출 */
-  }
-  
-  .dock-item {
-    width: 40px;
-    height: 40px;
+    display: none;
   }
   
   .app-subpanel {
-    display: none; /* 모바일에서는 탭 선택 시 레이어 교체형태로 구성 */
+    display: none;
   }
   
   .app-titlebar {
     display: none;
+  }
+  
+  .ai-floating-trigger {
+    right: 16px;
+    bottom: 72px;
+    top: auto;
+    transform: none;
+  }
+  
+  .ai-floating-trigger:hover {
+    transform: scale(1.08) rotate(5deg);
+  }
+  
+  .ai-floating-widget {
+    right: 16px;
+    bottom: 136px;
+    top: auto;
+    width: calc(100vw - 32px);
+    height: 420px;
+    transform: scale(0.9) translateY(20px);
+  }
+
+  .ai-floating-widget.active {
+    transform: scale(1) translateY(0);
   }
 }
