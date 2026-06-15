@@ -1,0 +1,19 @@
+{
+  "name": "con-cost-works",
+  "version": "2.0.0",
+  "description": "CON-COST Works v2 Collaboration Portal",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "nodemailer": "^8.0.10",
+    "socket.io": "^4.7.5"
+  }
+}

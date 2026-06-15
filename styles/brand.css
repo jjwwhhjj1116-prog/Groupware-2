@@ -1,0 +1,95 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css");
+
+:root {
+  /* 브랜드 테마 변수 (기본값: CON-COST 오렌지) */
+  --brand-primary: #F26A1B;      
+  --brand-primary-deep: #E55A0C; 
+  --brand-primary-soft: #FFF0E6; 
+  
+  --accent-blue: #1B4D8E;        /* Viet QS 블루 */
+  --accent-blue-deep: #123C73;
+  --accent-blue-soft: #EBF2FA;
+  
+  --accent-green: #3AAB3A;       
+  --accent-green-soft: #EAF8EA;
+  
+  --danger: #E03B3B;             
+  --danger-soft: #FDF2F2;
+  
+  --bg: #F5F6F9;                 /* 회색 톤 전체 배경 (네이버웍스 톤) */
+  --surface: #FFFFFF;            /* 카드 및 컨텐츠 배경 */
+  --text: #1E2022;               /* 본문 검은색 */
+  --text-sub: #767E89;           /* 서브 회색 */
+  --border: #E4E8EB;             /* 테두리 회색 */
+  --radius: 10px;                /* 깔끔하게 둥근 모서리 */
+  --shadow: 0 1px 3px rgba(0,0,0,.05), 0 6px 16px rgba(0,0,0,.03);
+  
+  /* 동적 스위칭 변수 (기본: CON-COST) */
+  --theme-color: var(--brand-primary);
+  --theme-color-deep: var(--brand-primary-deep);
+  --theme-color-soft: var(--brand-primary-soft);
+  
+  --transition-speed: 0.2s;
+  --dock-bg: #1F2329;            /* 최좌측 Dock의 어두운 배경 (네이버웍스 감성) */
+  --dock-text: #A6B0C0;
+  --sub-bg: #FFFFFF;             /* 서브 사이드바 배경 */
+}
+
+/* Viet QS 법인 선택 시 테마 변수 변경 */
+body.company-vietqs {
+  --theme-color: var(--accent-blue);
+  --theme-color-deep: var(--accent-blue-deep);
+  --theme-color-soft: var(--accent-blue-soft);
+  --dock-bg: #0F1D33;            /* Viet QS 선택 시 진네이비 Dock */
+}
+
+/* 다크모드 대응 */
+body.dark {
+  --bg: #111317;                 /* 전체 배경 */
+  --surface: #1C1E22;            /* 카드 및 서브 사이드바 */
+  --text: #ECEEF0;               /* 밝은 본문 */
+  --text-sub: #8B949E;           /* 서브 회색 */
+  --border: #2D3139;             /* 테두리 */
+  
+  --brand-primary-soft: #2E1B10; 
+  --accent-blue-soft: #121F33;
+  --accent-green-soft: #132D19;
+  
+  --dock-bg: #08090B;            /* 아주 어두운 Dock */
+  --sub-bg: #1C1E22;
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.45);
+}
+
+body.dark.company-vietqs {
+  --dock-bg: #050B14;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+  overflow: hidden;
+}
+
+/* 스크롤바 디자인 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-sub);
+}

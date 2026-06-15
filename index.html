@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CON-COST Works - 로그인</title>
+  <link rel="stylesheet" href="styles/brand.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <style>
+    .login-wrapper {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--brand-primary-soft) 0%, var(--bg) 100%);
+      padding: 20px;
+    }
+
+    body.dark .login-wrapper {
+      background: linear-gradient(135deg, #221a15 0%, var(--bg) 100%);
+    }
+
+    .login-container {
+      width: 440px;
+      padding: 44px 40px;
+      border-radius: 24px;
+      background-color: var(--surface);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .login-header {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .login-logo-img {
+      height: 44px;
+      object-fit: contain;
+    }
+
+    .login-title {
+      font-size: 14px;
+      color: var(--text-sub);
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-group label {
+      font-size: 12.5px;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 13px 16px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background-color: var(--bg);
+      color: var(--text);
+      font-size: 14.5px;
+      outline: none;
+      transition: all var(--transition-speed);
+    }
+
+    .input-field:focus {
+      border-color: var(--brand-primary);
+      box-shadow: 0 0 0 3px rgba(242, 106, 27, 0.12);
+      background-color: var(--surface);
+    }
+
+    .demo-info {
+      background-color: var(--brand-primary-soft);
+      border: 1px dashed rgba(242, 106, 27, 0.3);
+      border-radius: var(--radius);
+      padding: 16px;
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    body.dark .demo-info {
+      background-color: #2c1e17;
+      border-color: rgba(242, 106, 27, 0.2);
+    }
+
+    .demo-info strong {
+      color: var(--brand-primary);
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      font-size: 15px;
+      border-radius: var(--radius);
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-wrapper">
+    <div class="login-container">
+      <div class="login-header">
+        <img class="login-logo-img" src="assets/logo-concost-horizontal.png" alt="CON-COST Logo">
+        <p class="login-title">네이버웍스와 노션을 통합한 사내 협업 시스템<br><strong>CON-COST Works v2</strong></p>
+      </div>
+
+      <form id="loginForm" onsubmit="handleFormSubmit(event)">
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+          <div class="form-group">
+            <label for="email">이메일 주소</label>
+            <input type="email" id="email" class="input-field" placeholder="yjw@con-cost.com" required value="yjw@con-cost.com">
+          </div>
+          <div class="form-group">
+            <label for="password">비밀번호</label>
+            <input type="password" id="password" class="input-field" placeholder="••••••••" required value="123456">
+          </div>
+          
+          <div class="demo-info">
+            💡 데모 진행을 위해 아래 계정으로 로그인해 주세요.<br>
+            이메일: <strong>yjw@con-cost.com</strong> / 비밀번호: <strong>임의 입력 통과</strong>
+          </div>
+
+          <button type="submit" class="btn btn-primary login-btn">로그인</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="scripts/org-hr-card-data-core.js"></script>
+  <script src="scripts/store.js"></script>
+  <script src="scripts/auth.js"></script>
+  <script>
+    window.appStore.initStore();
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById("email").value;
+      const pw = document.getElementById("password").value;
+      window.appAuth.login(email, pw);
+    }
+  </script>
+</body>
+</html>
